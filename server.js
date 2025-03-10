@@ -1,8 +1,10 @@
 const express = require('express');
 const path = require('path');
 const db = require("./config/db");
-
+const router = require("./routes")
 const app = express();
+
+app.use(express.json())
 
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected"));
@@ -15,6 +17,8 @@ app.get('/', (req, res) => {
 app.get('/ping', (req, res) => {
   res.send("pong");
 });
+
+app.use("/", router)
 
 app.use('/docs.bruno', express.static(path.join(__dirname, 'docs.bruno'))); 
 

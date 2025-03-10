@@ -1,0 +1,21 @@
+meta {
+  name: post-desks
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:3000/desk
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+  "userId": "ObjectId('67ce708d072474ec9bf9c90e')",
+  "title" : "John's Study Desk",
+  "messinessLevel": 8,
+  "image" : "desk1.jpg",
+  "createdAt" : "2025-03-10T12:00:00Z"
+  }
+}
