@@ -1,11 +1,19 @@
 const express = require("express");
+const {check, validationResult} = require("express-validator")
 const router = express.Router();
+const Desk = require("./models/deskModel");
 
-
-router.get("/desk", async (req, res) => {
+router.get("/desk", [
+    check("title").not().isEmpty().withMessage("Title is required"),
+    check("messinessLevel").isInt({ min: 1, max: 10}).withMessage("Messiness level must be between 1 and 10")
+], async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array()})
+    }
     try {
         const desks = await Desk.find();
-        if (!desks) {
+        if (!desks.length) {
             return res.status(400).json({ message: "No desks found" });
         }
         return res.json(desks);
@@ -14,7 +22,14 @@ router.get("/desk", async (req, res) => {
     }
 });
 
-router.post("/desk", async (req, res) => {
+router.post("/desk", [
+    check('title').not().isEmpty().withMessage('Title is required'),
+    check('messinessLevel').isInt({ min: 1, max: 10 }).withMessage('Messiness level must be between 1 and 10')
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     try {
         const desk = req.body;
         const newDesk = new Desk(desk);
@@ -25,7 +40,14 @@ router.post("/desk", async (req, res) => {
     }
 });
 
-router.put("/desk/:id", async (req, res) => {
+router.put("/desk/:id", [
+    check("title").optional().not().isEmpty().withMessage("Title is required"),
+    check("messinessLevel").optional().isInt({ min: 1, max: 10}).withMessage("Messiness level must be between 1 and 10")
+], async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array()})
+    }
     try {
         const id = req.params.id;
         const desk = req.body;
