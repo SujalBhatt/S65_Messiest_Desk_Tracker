@@ -18,7 +18,7 @@ app.get('/ping', (req, res) => {
   res.send("pong");
 });
 
-app.use("/", router);
+app.use("/api", router); // Prefix routes with /api
 
 app.use('/docs.bruno', express.static(path.join(__dirname, 'docs.bruno')));
 
