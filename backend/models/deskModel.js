@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-
+const User = require("./userModel")
 const deskSchema = new mongoose.Schema({
-    userId: mongoose.Schema.Types.ObjectId,
     title: {
         type: String,
         required: true
@@ -16,8 +15,13 @@ const deskSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    created_by: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', 
+        required: true
     }
 });
 
-const Desk = mongoose.model("Desk", deskSchema); // Ensure model name is capitalized
+const Desk = mongoose.model("Desk", deskSchema);
 module.exports = Desk;
