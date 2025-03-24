@@ -1,7 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import DeskItem from './DeskItem'; // Import the DeskItem component
 
 const LandingPage = () => {
+  const dummyDesk = {
+    name: 'John\'s Desk',
+    owner: 'John Doe',
+    messinessLevel: 'High',
+    description: 'Papers and books scattered everywhere.'
+  };
+
   return (
     <div className="landing-page text-center p-12">
       <header className="header bg-green-500 p-6 rounded-lg mb-8">
@@ -34,6 +42,10 @@ const LandingPage = () => {
       <section className="contact bg-white p-6 rounded-lg shadow">
         <h2 className="text-3xl font-semibold mb-4">Contact</h2>
         <p className="text-lg mb-4">Have questions or need support? Reach out to us at <a href="mailto:support@messiestdesktracker.com" className="text-blue-500">support@messiestdesktracker.com</a>.</p>
+      </section>
+      <section className="example-desk bg-white p-6 rounded-lg shadow">
+        <h2 className="text-3xl font-semibold mb-4">Example Desk</h2>
+        <DeskItem desk={dummyDesk} /> {/* Render the DeskItem component with dummy data */} 
       </section>
     </div>
   );
